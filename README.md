@@ -2,13 +2,13 @@
 
 This is a script for monitoring [Unbound](https://nlnetlabs.nl/projects/unbound/about/) DNS resolvers.
 
-There is a script named check_unbound which did not give the metrics I was interested in, so I wrote a new one.
+There was already a script named check_unbound which didn't give the metrics I was interested in, so I wrote a new one.__
 I didn't want to confuse my new script with the original so I added "-ng" to the name of my script.
 
-The script uses unbound-control to check that Unbound is running.
-Then it runs unbound-control stats to get the statistics.
+The script uses unbound-control to check that Unbound is running.__
+Then it runs unbound-control stats to get the statistics.__
 These are the statistics shown:
-
+```
 total.num.queries
 total.num.queries_ip_ratelimited
 total.num.cachehits
@@ -63,7 +63,7 @@ msg.cache.count
 rrset.cache.count
 infra.cache.count
 key.cache.count
-
+```
 An explanation for all the values can be found in the man page for [Unbound-control](https://nlnetlabs.nl/documentation/unbound/unbound-control/)
 
 I have tested the script with Op5 Monitor. It should work with other Nagios compatible products as well.
@@ -79,9 +79,12 @@ Result code: OK
 Unbound OK | total.num.queries=214; total.num.queries_ip_ratelimited=0; total.num.cachehits=36; total.num.cachemiss=178; total.num.prefetch=0; total.num.zero_ttl=0; total.num.recursivereplies=180; total.requestlist.avg=2.96067; total.requestlist.max=16; total.requestlist.overwritten=0; total.requestlist.exceeded=0; total.requestlist.current.all=0; total.requestlist.current.user=0; total.tcpusage=0; mem.cache.rrset=5380072; mem.cache.message=2825891; mem.mod.iterator=16588; mem.mod.validator=545228; mem.mod.respip=0; mem.mod.subnet=272632; mem.mod.ipsecmod=0; num.query.type.A=89; num.query.type.AAAA=123; num.query.type.SRV=2; num.query.class.IN=214; num.query.opcode.QUERY=214; num.query.tcp=0; num.query.tcpout=2; num.query.ipv6=0; num.query.flags.QR=0; num.query.flags.AA=0; num.query.flags.TC=0; num.query.flags.RD=214; num.query.flags.RA=0; num.query.flags.Z=0; num.query.flags.AD=0; num.query.flags.CD=0; num.query.edns.present=206; num.query.edns.DO=0; num.answer.rcode.NOERROR=213; num.answer.rcode.FORMERR=0;
 ```
 
+![alt text](graph_example.png "Example of graphs")
+
+
 ### Instructions
 
-Enable statistics in Unbound by editing /etc/unbound/unbound.conf
+Enable statistics in Unbound by adding the following in `/etc/unbound/unbound.conf`
 ```
 server:
     statistics-interval: 0
@@ -97,14 +100,14 @@ remote-control:
 Restart Unbound.
 
 Install nrpe on the server running unbound in case you don't already have it.
-Copy check_unbound-ng.sh to the server running unbound in for example /usr/lib64/nagios/plugins/
-Configure nrpe and add a new command in /etc/nagios/nrpe.cfg
+Copy `check_unbound-ng.sh` to the server running unbound in for example `/usr/lib64/nagios/plugins/`
+Configure nrpe and add a new command in `/etc/nagios/nrpe.cfg`
 ```
 command[check_unbound]=/usr/lib64/nagios/plugins/check_unbound-ng.sh
 ```
 Restart nrpe.
 
-The script check_unbound-ng.sh uses the command /usr/sbin/unbound-control which needs root priviledges.
+The script `check_unbound-ng.sh` uses the command `/usr/sbin/unbound-control` which needs root priviledges.
 The most secure way to do that is to give nrpe root priviledges executing unbound-control using sudo.
 Run visudo as root and add the following:
 ```
