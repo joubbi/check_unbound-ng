@@ -2,11 +2,11 @@
 
 This is a script for monitoring [Unbound](https://nlnetlabs.nl/projects/unbound/about/) DNS resolvers.
 
-There was already a script named check_unbound which didn't give the metrics I was interested in, so I wrote a new one.__
+There was already a script named check_unbound which didn't give the metrics I was interested in, so I wrote a new one.  
 I didn't want to confuse my new script with the original so I added "-ng" to the name of my script.
 
-The script uses unbound-control to check that Unbound is running.__
-Then it runs unbound-control stats to get the statistics.__
+The script uses unbound-control to check that Unbound is running.  
+Then it runs unbound-control stats to get the statistics.  
 These are the statistics shown:
 ```
 total.num.queries
@@ -64,7 +64,7 @@ rrset.cache.count
 infra.cache.count
 key.cache.count
 ```
-An explanation for all the values can be found in the man page for [Unbound-control](https://nlnetlabs.nl/documentation/unbound/unbound-control/)
+An explanation for all the values can be found in the man page for [Unbound-control](https://nlnetlabs.nl/documentation/unbound/unbound-control/).
 
 I have tested the script with Op5 Monitor. It should work with other Nagios compatible products as well.
 
