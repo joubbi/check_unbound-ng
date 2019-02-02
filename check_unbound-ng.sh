@@ -24,5 +24,5 @@ if ! $unboundcontrol -q status; then
   exit 3
 fi
 
-echo -n "Unbound OK | "
+printf '%s' "Unbound OK | "
 $unboundcontrol stats | awk 'BEGIN { ORS = "; " } ! /thread/ && ! /histogram/ && ! /time./'
