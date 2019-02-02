@@ -15,6 +15,7 @@
 #                                                                     #
 #######################################################################
 
+set -o errexit -o nounset
 
 unboundcontrol="/usr/bin/sudo /usr/sbin/unbound-control"
 
