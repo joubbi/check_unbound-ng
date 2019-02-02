@@ -19,10 +19,9 @@ set -o errexit -o nounset
 
 unboundcontrol="/usr/bin/sudo /usr/sbin/unbound-control"
 
-$unboundcontrol -q status
-if [ "$?" != 0 ]; then
+if ! $unboundcontrol -q status; then
   echo "Unbound not running properly!"
-exit 3
+  exit 3
 fi
 
 echo "Unbound OK | " | tr -d '\n'
